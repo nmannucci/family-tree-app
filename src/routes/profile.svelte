@@ -38,7 +38,7 @@
   <!-- Body of page -->
   <div>
     <div class="ml-32px mr-32px mt-16px">
-      <div class="grid grid-cols-3 gap-16px">
+      <div class="grid grid-cols-2 gap-16px">
         <div class="col-span-1">
           <h2 class="subtitle">Contact Info</h2>
           <div class="box min-h-196px">
@@ -58,7 +58,7 @@
             </div>
           </div>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-1">
           <h2 class="subtitle">Bio</h2>
           <div class="box min-h-196px">
             <p>

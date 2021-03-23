@@ -1,5 +1,5 @@
 <script>
-  import UploadButton from "../components/UI/UploadButton.svelte";
+  import IconButton from "../components/UI/IconButton.svelte";
   import RecentUploads from "../components/UI/RecentUploads.svelte";
 
   let imageArray = [
@@ -26,7 +26,7 @@
 <section class="p-36px">
   <div class="flex justify-between mb-40px">
     <h1 class="font-bold text-36px text-black">My Uploads</h1>
-    <UploadButton title="Upload" hasIcon="true" />
+    <IconButton title="Upload" hasIcon="true" />
   </div>
   <RecentUploads {imageArray} title="All Uploads" />
 </section>
