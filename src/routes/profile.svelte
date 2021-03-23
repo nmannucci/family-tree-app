@@ -1,6 +1,6 @@
 <script>
-  import { children } from "svelte/internal";
   import ProfileFamBox from "../components/UI/ProfileFamBox.svelte";
+  import RecentUploads from "../components/UI/RecentUploads.svelte";
   import ProfileIcon from "../components/UI/ProfileIcon.svelte";
 
   let name = "Nico Mannucci";
@@ -14,13 +14,23 @@
       { name: "Violet Blitz" },
     ],
   };
+
+  let recentUplaods = [
+    "https://source.unsplash.com/random/640x300",
+    "https://source.unsplash.com/random/640x640",
+    "https://source.unsplash.com/random/640x290",
+    "https://source.unsplash.com/random/640x820",
+    "https://source.unsplash.com/random/640x600",
+    "https://source.unsplash.com/random/450x600",
+    "https://source.unsplash.com/random/230x400",
+  ];
 </script>
 
 <svelte:head>
   <title>Profile</title>
 </svelte:head>
 
-<section class="pb-100px">
+<section class="pb-50px">
   <div class="flex flex-col justify-center items-center p-16px">
     <div class=" w-144px h-144px rounded-full bg-purple-500" />
     <h1 class="text-center mt-12px font-bold text-40px">{name}</h1>
@@ -31,17 +41,17 @@
       <div class="grid grid-cols-3 gap-16px">
         <div class="col-span-1">
           <h2 class="subtitle">Contact Info</h2>
-          <div class="box ">
+          <div class="box min-h-196px">
             <div class="flex justify-between pb-12px">
-              <h3 class="font-medium text-lg">Phone Number:</h3>
+              <h3 class="font-bold text-base">Phone Number:</h3>
               <p class="text-right">6263403194</p>
             </div>
             <div class="flex justify-between pb-12px">
-              <h3 class="font-medium text-lg">Email:</h3>
+              <h3 class="font-bold text-base">Email:</h3>
               <p class="text-right">hello@gmail.com</p>
             </div>
             <div class="flex justify-between pb-12px">
-              <h3 class="font-medium text-lg">Address:</h3>
+              <h3 class="font-bold text-base">Address:</h3>
               <p class="text-right">
                 36 San Miguel Rd, <br /> Pasadena CA, <br />91105 United States
               </p>
@@ -81,13 +91,16 @@
           </ProfileFamBox>
         </div>
       </div>
+      <div class="mt-36px">
+        <RecentUploads title="Recent Uploads" imageArray={recentUplaods} />
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .subtitle {
-    @apply font-md text-lg mb-16px text-hex-6E84A3;
+    @apply font-md text-lg mb-12px text-hex-6E84A3;
   }
 
   .box {
