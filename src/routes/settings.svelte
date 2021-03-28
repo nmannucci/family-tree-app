@@ -11,7 +11,7 @@
   <h1 class="font-bold text-36px text-black">Settings</h1>
 </section>
 
-<div class="px-36px pb-50px w-full bg-hex-f9fbfd relative">
+<div class="px-36px pb-75px w-full bg-hex-f9fbfd relative">
   <form>
     <div class="grid grid-cols-4 w-full gap-36px">
       <div id="f-name" class="col-span-1">
@@ -31,10 +31,12 @@
 
       <div id="photo" class="col-start-1 col-end-2">
         <label for="photo" class="block">Photo</label>
-        <div class="flex items-center justify-between">
-          <div class="w-96px h-96px mt-8px bg-blue-300 rounded-full" />
+        <div class="flex items-center justify-between -lg:flex-col ">
+          <div
+            class="w-96px h-96px mt-8px bg-blue-300 rounded-full -lg:mb-8px"
+          />
           <button
-            class="rounded-md bg-blue-500 max-h-43px p-2 text-white hover:bg-blue-600 transition"
+            class="rounded-md bg-blue-500 max-h-43px p-2 text-white font-medium hover:(bg-blue-600 transform scale-103) transition "
             >Change Photo
           </button>
         </div>
