@@ -1,5 +1,6 @@
 <script>
-  export let name;
+  import profileStore from "../../profile-store";
+
   export let segment;
 </script>
 
@@ -8,7 +9,10 @@
 >
   <div class="flex flex-col items-center">
     <div class="rounded-full w-100px h-100px bg-blue-500" />
-    <h2 class=" mt-12px font-bold text-black text-24px">{name}</h2>
+    <h2 class=" mt-12px font-bold text-black text-24px">
+      {$profileStore.firstName}
+      {$profileStore.lastName}
+    </h2>
   </div>
   <ul class="mt-52px w-full text-black text-20px font-medium h-full">
     <div class="flex flex-col justify-between h-full">
