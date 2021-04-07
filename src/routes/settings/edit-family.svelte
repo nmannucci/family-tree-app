@@ -1,6 +1,5 @@
 <script>
   //TODO: Add error handling if user does not match name with relationship when deleting someone.
-
   import familyStore from "../../family-store";
   import ProfileFamBox from "../../components/UI/ProfileFamBox.svelte";
   import ProfileIcon from "../../components/UI/ProfileIcon.svelte";
