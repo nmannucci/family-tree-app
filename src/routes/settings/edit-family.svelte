@@ -1,78 +1,147 @@
 <script>
   //TODO: Add error handling if user does not match name with relationship when deleting someone.
+  // TODO: Error when you delete spouse then add them back.
+  import { onMount } from "svelte";
   import familyStore from "../../family-store";
+  import profileStore from "../../profile-store";
   import ProfileFamBox from "../../components/UI/ProfileFamBox.svelte";
   import ProfileIcon from "../../components/UI/ProfileIcon.svelte";
+
+  let familyObject;
+  let profileName;
+  let spouse;
+  let siblings = [];
+  let parents = [];
+  let children = [];
 
   let familyMemberInput = "";
   let selectedRelationship;
   let deleteRelationship;
-  let selectedDeleteMember;
+  let selectedDeleteMember = "Choose a member";
+
+  onMount(() => {
+    profileName = $profileStore.firstName + " " + $profileStore.lastName;
+    familyObject = $familyStore;
+
+    for (let i of familyObject.children) {
+      if (i.name == profileName) {
+        spouse = i.marriages[0].spouse.name;
+
+        for (let e of i.children) {
+          children = [...children, e.name];
+        }
+      }
+      if (i.name !== profileName) {
+        siblings = [...siblings, i.name];
+      }
+    }
+    parents = [familyObject.name, familyObject.marriages[0].spouse.name];
+  });
 
   function addFamilyMember() {
     if (selectedRelationship == "spouse") {
       familyStore.update((familyObject) => {
-        familyObject.spouse = [
-          ...familyObject.spouse,
-          { name: familyMemberInput },
-        ];
+        spouse = familyMemberInput;
+        for (let i of familyObject.children) {
+          if (i.name == profileName) {
+            i.marriages[0].spouse = { name: spouse };
+          }
+        }
+        familyMemberInput = "";
         return familyObject;
       });
     } else if (selectedRelationship === "parent") {
       familyStore.update((familyObject) => {
-        familyObject.parents = [
-          ...familyObject.parents,
-          { name: familyMemberInput },
+        parents = [...parents, familyMemberInput];
+        familyObject.marriages = [
+          ...familyObject.marriages,
+          {
+            spouse: {
+              name: familyMemberInput,
+            },
+          },
         ];
+        familyMemberInput = "";
         return familyObject;
       });
     } else if (selectedRelationship === "sibling") {
       familyStore.update((familyObject) => {
-        familyObject.siblings = [
-          ...familyObject.siblings,
-          { name: familyMemberInput },
-        ];
+        siblings = [...siblings, familyMemberInput];
+        for (let i of familyObject.children) {
+          if (i.name !== profileName) {
+            familyObject.children = [
+              ...familyObject.children,
+              { name: familyMemberInput },
+            ];
+            break;
+          }
+        }
+        familyMemberInput = "";
         return familyObject;
       });
-    } else if (selectedRelationship === "children") {
+    } else if (selectedRelationship === "child") {
       familyStore.update((familyObject) => {
-        familyObject.children = [
-          ...familyObject.children,
-          { name: familyMemberInput },
-        ];
+        children = [...children, familyMemberInput];
+        for (let i of familyObject.children) {
+          if (i.name == profileName) {
+            i.children = [...i.children, { name: familyMemberInput }];
+          }
+        }
+        familyMemberInput = "";
         return familyObject;
       });
     }
-    familyMemberInput = "";
   }
 
   function deleteMember() {
     if (deleteRelationship === "spouse") {
       familyStore.update((familyObject) => {
-        familyObject.spouse = familyObject.spouse.filter(
-          (obj) => obj.name !== selectedDeleteMember
-        );
+        if (selectedDeleteMember == spouse) {
+          spouse = "";
+        }
+        for (let i of familyObject.children) {
+          if (i.name == profileName) {
+            if (i.marriages[0].spouse.name == selectedDeleteMember) {
+              i.marriages = [];
+            }
+          }
+        }
+
         return familyObject;
       });
     } else if (deleteRelationship === "parent") {
       familyStore.update((familyObject) => {
-        familyObject.parents = familyObject.parents.filter(
-          (obj) => obj.name !== selectedDeleteMember
-        );
+        parents = parents.filter((person) => person !== selectedDeleteMember);
+        familyObject.name = parents[0];
+        familyObject.marriages[0].spouse.name = parents[1];
+
         return familyObject;
       });
     } else if (deleteRelationship === "child") {
       familyStore.update((familyObject) => {
-        familyObject.children = familyObject.children.filter(
-          (obj) => obj.name !== selectedDeleteMember
-        );
+        children = children.filter((person) => person !== selectedDeleteMember);
+
+        for (let i of familyObject.children) {
+          if (i.name == profileName) {
+            i.children = i.children.filter(
+              (person) => person.name !== selectedDeleteMember
+            );
+          }
+        }
         return familyObject;
       });
     } else if (deleteRelationship === "sibling") {
       familyStore.update((familyObject) => {
-        familyObject.siblings = familyObject.siblings.filter(
-          (obj) => obj.name !== selectedDeleteMember
-        );
+        siblings = siblings.filter((person) => person !== selectedDeleteMember);
+
+        for (let i of familyObject.children) {
+          if (i.name !== profileName) {
+            familyObject.children = familyObject.children.filter(
+              (person) => person.name !== selectedDeleteMember
+            );
+          }
+        }
+
         return familyObject;
       });
     }
@@ -119,20 +188,21 @@
         <label for="delete" class="block mb-8px">Delete a Member</label>
         <select
           name="delete"
-          class="py-8px px-12px w-full border border-hex-6E84A3 text-black rounded-md text-lg "
+          class="py-8px px-12px w-full border border-hex-6E84A3 text-black rounded-md text-lg"
           bind:value={selectedDeleteMember}
         >
-          {#each $familyStore.spouse as member}
-            <option>{member.name}</option>
+          <option value="Choose a member">Choose a member</option>
+          {#if spouse}
+            <option>{spouse}</option>
+          {/if}
+          {#each parents as parent}
+            <option>{parent}</option>
           {/each}
-          {#each $familyStore.parents as member}
-            <option>{member.name}</option>
+          {#each children as child}
+            <option>{child}</option>
           {/each}
-          {#each $familyStore.children as member}
-            <option>{member.name}</option>
-          {/each}
-          {#each $familyStore.siblings as member}
-            <option>{member.name}</option>
+          {#each siblings as sibling}
+            <option>{sibling}</option>
           {/each}
         </select>
       </div>
@@ -159,24 +229,24 @@
     </div>
   </div>
   <div class="flex flex-wrap mt-64px">
-    <ProfileFamBox title="Spouse">
-      {#each $familyStore.spouse as spouse}
-        <ProfileIcon name={spouse.name} />
-      {/each}
-    </ProfileFamBox>
+    {#if spouse !== "" && spouse !== undefined}
+      <ProfileFamBox title="Spouse">
+        <ProfileIcon name={spouse} />
+      </ProfileFamBox>
+    {/if}
     <ProfileFamBox title="Parents">
-      {#each $familyStore.parents as parent}
-        <ProfileIcon name={parent.name} />
+      {#each parents as parent}
+        <ProfileIcon name={parent} />
       {/each}
     </ProfileFamBox>
     <ProfileFamBox title="Children">
-      {#each $familyStore.children as child}
-        <ProfileIcon name={child.name} />
+      {#each children as child}
+        <ProfileIcon name={child} />
       {/each}
     </ProfileFamBox>
     <ProfileFamBox title="Siblings">
-      {#each $familyStore.siblings as sibling}
-        <ProfileIcon name={sibling.name} />
+      {#each siblings as sibling}
+        <ProfileIcon name={sibling} />
       {/each}
     </ProfileFamBox>
   </div>

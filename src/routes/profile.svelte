@@ -4,6 +4,38 @@
   import ProfileFamBox from "../components/UI/ProfileFamBox.svelte";
   import RecentUploads from "../components/UI/RecentUploads.svelte";
   import ProfileIcon from "../components/UI/ProfileIcon.svelte";
+  import { onMount } from "svelte";
+
+  // TODO: Fix if someone children or siblings or parents is empty
+
+  let familyObject;
+  let profileName;
+  let spouse;
+  let siblings = [];
+  let parents = [];
+  let children = [];
+  onMount(() => {
+    profileName = $profileStore.firstName + " " + $profileStore.lastName;
+    familyObject = $familyStore;
+
+    for (let i of familyObject.children) {
+      if (i.name == profileName && i.marriages) {
+        spouse = i.marriages[0].spouse.name;
+
+        if (i.children) {
+          for (let e of i.children) {
+            children = [...children, e.name];
+          }
+        } else {
+          children = [];
+        }
+      }
+      if (i.name !== profileName) {
+        siblings = [...siblings, i.name];
+      }
+    }
+    parents = [familyObject.name, familyObject.marriages[0].spouse.name];
+  });
 
   let recentUplaods = [
     "https://source.unsplash.com/random/640x300",
@@ -24,8 +56,9 @@
   <div class="flex flex-col justify-center items-center p-16px">
     <div class=" w-144px h-144px rounded-full bg-purple-500" />
     <h1 class="text-center mt-12px font-bold text-40px">
-      {$profileStore.firstName}
-      {$profileStore.lastName}
+      {profileName}
+      <!-- {$profileStore.firstName}
+      {$profileStore.lastName} -->
     </h1>
   </div>
   <!-- Body of page -->
@@ -69,26 +102,32 @@
           Immediete Family
         </h2>
         <div class="flex flex-wrap">
-          <ProfileFamBox title="Spouse">
-            {#each $familyStore.spouse as spouse}
-              <ProfileIcon name={spouse.name} />
-            {/each}
-          </ProfileFamBox>
-          <ProfileFamBox title="Parents">
-            {#each $familyStore.parents as parent}
-              <ProfileIcon name={parent.name} />
-            {/each}
-          </ProfileFamBox>
-          <ProfileFamBox title="Siblings">
-            {#each $familyStore.siblings as sibling}
-              <ProfileIcon name={sibling.name} />
-            {/each}
-          </ProfileFamBox>
-          <ProfileFamBox title="Children">
-            {#each $familyStore.children as child}
-              <ProfileIcon name={child.name} />
-            {/each}
-          </ProfileFamBox>
+          {#if spouse}
+            <ProfileFamBox title="Spouse">
+              <ProfileIcon name={spouse} />
+            </ProfileFamBox>
+          {/if}
+          {#if parents !== []}
+            <ProfileFamBox title="Parents">
+              {#each parents as parent}
+                <ProfileIcon name={parent} />
+              {/each}
+            </ProfileFamBox>
+          {/if}
+          {#if siblings !== []}
+            <ProfileFamBox title="Siblings">
+              {#each siblings as sibling}
+                <ProfileIcon name={sibling} />
+              {/each}
+            </ProfileFamBox>
+          {/if}
+          {#if children !== []}
+            <ProfileFamBox title="Children">
+              {#each children as child}
+                <ProfileIcon name={child} />
+              {/each}
+            </ProfileFamBox>
+          {/if}
         </div>
       </div>
       <!-- Margin is 20px bc 16 bottom margin is from ProfileFamBox and needs to be 36px in total -->

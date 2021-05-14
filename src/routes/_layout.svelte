@@ -8,7 +8,7 @@
 
 <!-- Add segment to the sidebarmenu -->
 <main class="flex">
-	<SideBarMenu {name} {segment} />
+	<SideBarMenu {segment} />
 	<div class="bg-hex-f9fbfd h-screen w-full ml-280px">
 		<slot />
 	</div>

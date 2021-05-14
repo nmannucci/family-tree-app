@@ -40,7 +40,8 @@ export default {
           globalUtility: true, // set utility style is global or scoped
         }),
         compilerOptions: {
-          dev,
+          //Used to be just dev
+          dev: false,
           hydratable: true,
         },
       }),
