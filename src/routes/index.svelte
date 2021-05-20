@@ -2,54 +2,31 @@
   import { onMount } from "svelte";
   import familyStore from "../family-store";
 
+  // Create component that can receive the profile data from family tree that can be passed on to the slug route.
+  // Create a component that simply calls the route when a node is clicked.
+  // Put an anchor tag within each node element using vanilla js and access inner html to put an anchor tag around it.
+
   let element;
+  let routeName;
   onMount(() => {
     dTree.init([$familyStore], {
       target: element,
       debug: true,
       height: 800,
       width: 1200,
+      class: "node",
+      textClass: "nodeText",
       nodeWidth: 150,
       callbacks: {
-        nodeClick: function (name, extra, id) {
+        nodeClick: function (name, id) {
+          routeName = name;
           console.log(name, id);
         },
         nodeHeightSeperation: function (nodeWidth, nodeMaxHeight) {
-          nodeMaxHeight = 120;
+          nodeMaxHeight = 200;
           nodeWidth = 120;
-          return nodeWidth;
+          return nodeMaxHeight;
         },
-        // textRenderer: function (name, extra, textClass) {
-        //   // THis callback is optinal but can be used to customize
-        //   // how the text is rendered without having to rewrite the entire node
-        //   // from screatch.
-        //   if (extra && extra.nickname)
-        //     name = name + " (" + extra.nickname + ")";
-        //   return "<p align='center' class='" + textClass + "'>" + name + "</p>";
-        // },
-        // nodeRenderer: function (
-        //   name,
-        //   x,
-        //   y,
-        //   height,
-        //   width,
-        //   extra,
-        //   id,
-        //   nodeClass,
-        //   textClass,
-        //   textRenderer
-        // ) {
-        //   // This callback is optional but can be used to customize the
-        //   // node element using HTML.
-        //   let node = "";
-        //   node += "<div ";
-        //   node += 'style="height:100%;width:100%;" ';
-        //   node += 'class="' + nodeClass + '" ';
-        //   node += 'id="node' + id + '">\n';
-        //   node += textRenderer(name, extra, textClass);
-        //   node += "</div>";
-        //   return node;
-        // },
       },
     });
   });
@@ -67,7 +44,7 @@
   <h1 class="font-bold text-3xl mb-18px">Family Tree</h1>
   <div
     id="graph"
-    class="border-2 border-blue-200 rounded-lg "
+    class="border-2 border-gray-300 rounded-lg"
     bind:this={element}
   />
 </section>
@@ -77,14 +54,17 @@
     color: black;
   }
 
+  /* These classes might get purged when I bundle it bc they are labeled as unused CSS */
+
   .linage {
     fill: none;
-    stroke: black;
+    stroke: #6b7280;
     stroke-width: 2px;
+    stroke-linejoin: round;
   }
   .marriage {
     fill: none;
-    stroke: purple;
+    stroke: #6b7280;
     stroke-width: 2px;
   }
   .marriageNode {
@@ -93,22 +73,38 @@
   .node {
     width: 100px;
     cursor: pointer;
-    background-color: lightblue;
-    border-radius: 5px;
+    background-color: white;
+
+    border-radius: 10px;
     border-style: solid;
-    border-width: 1px;
-    padding: 8px;
+    border-width: 2.5px;
+    border-color: #d1d5db;
+    padding: 8px 0px;
 
     transition: all;
     transition-duration: 300ms;
   }
+
+  .node:before {
+    content: "";
+    display: block;
+    width: 45px;
+    height: 45px;
+    margin: auto;
+    margin-bottom: 8px;
+
+    background-color: #818cf8;
+    border-radius: 90px;
+  }
+
   .node:hover {
-    transform: scale(1.05);
+    border-color: #10b981;
   }
 
   .nodeText {
-    font: 24px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 600;
     box-sizing: border-box;
+    color: black;
   }
 </style>

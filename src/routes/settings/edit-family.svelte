@@ -23,14 +23,19 @@
     profileName = $profileStore.firstName + " " + $profileStore.lastName;
     familyObject = $familyStore;
 
-    for (let i of familyObject.children) {
-      if (i.name == profileName) {
+    for (let i of familyObject.marriages[0].children) {
+      if (i.name == profileName && i.marriages) {
         spouse = i.marriages[0].spouse.name;
 
-        for (let e of i.children) {
-          children = [...children, e.name];
+        if (i.marriages[0].children) {
+          for (let e of i.marriages[0].children) {
+            children = [...children, e.name];
+          }
+        } else {
+          children = [];
         }
       }
+
       if (i.name !== profileName) {
         siblings = [...siblings, i.name];
       }
@@ -42,52 +47,66 @@
     if (selectedRelationship == "spouse") {
       familyStore.update((familyObject) => {
         spouse = familyMemberInput;
-        for (let i of familyObject.children) {
+        for (let i of familyObject.marriages[0].children) {
           if (i.name == profileName) {
             i.marriages[0].spouse = { name: spouse };
           }
         }
         familyMemberInput = "";
+        console.log(familyObject);
         return familyObject;
       });
     } else if (selectedRelationship === "parent") {
       familyStore.update((familyObject) => {
-        parents = [...parents, familyMemberInput];
-        familyObject.marriages = [
-          ...familyObject.marriages,
-          {
-            spouse: {
-              name: familyMemberInput,
-            },
-          },
-        ];
+        let parentLimitCheck = [...parents, familyMemberInput];
+        if (parentLimitCheck.length <= 2) {
+          parents = [...parents, familyMemberInput];
+          familyObject.name = parents[0];
+          familyObject.marriages[0].spouse.name = parents[1];
+        } else {
+          alert("No more than two parents allowed");
+        }
+        // familyObject.marriages = [
+        //   ...familyObject.marriages,
+        //   {
+        //     spouse: {
+        //       name: familyMemberInput,
+        //     },
+        //   },
+        // ];
         familyMemberInput = "";
+        console.log(familyObject);
         return familyObject;
       });
     } else if (selectedRelationship === "sibling") {
       familyStore.update((familyObject) => {
         siblings = [...siblings, familyMemberInput];
-        for (let i of familyObject.children) {
+        for (let i of familyObject.marriages[0].children) {
           if (i.name !== profileName) {
-            familyObject.children = [
-              ...familyObject.children,
+            familyObject.marriages[0].children = [
+              ...familyObject.marriages[0].children,
               { name: familyMemberInput },
             ];
             break;
           }
         }
         familyMemberInput = "";
+        console.log(familyObject);
         return familyObject;
       });
     } else if (selectedRelationship === "child") {
       familyStore.update((familyObject) => {
         children = [...children, familyMemberInput];
-        for (let i of familyObject.children) {
+        for (let i of familyObject.marriages[0].children) {
           if (i.name == profileName) {
-            i.children = [...i.children, { name: familyMemberInput }];
+            i.marriages[0].children = [
+              ...i.marriages[0].children,
+              { name: familyMemberInput },
+            ];
           }
         }
         familyMemberInput = "";
+        console.log(familyObject);
         return familyObject;
       });
     }
@@ -99,14 +118,14 @@
         if (selectedDeleteMember == spouse) {
           spouse = "";
         }
-        for (let i of familyObject.children) {
+        for (let i of familyObject.marriages[0].children) {
           if (i.name == profileName) {
             if (i.marriages[0].spouse.name == selectedDeleteMember) {
-              i.marriages = [];
+              // Be careful here bc just leaves empty object for spouse, does not delete entire spuose field.
+              i.marriages[0].spouse = undefined;
             }
           }
         }
-
         return familyObject;
       });
     } else if (deleteRelationship === "parent") {
@@ -115,6 +134,7 @@
         familyObject.name = parents[0];
         familyObject.marriages[0].spouse.name = parents[1];
 
+        console.log(familyObject);
         return familyObject;
       });
     } else if (deleteRelationship === "child") {
@@ -154,6 +174,12 @@
 
 <section class="p-36px ">
   <h1 class="font-bold text-36px text-black mb-36px">Edit Family</h1>
+  <!-- {#if parentLimitError}
+    <h2 class="font-medium text-lg text-red-500">
+      No more than two parents is allowed
+    </h2>
+  {/if} -->
+
   <div class="max-w-1100px">
     <form class="grid grid-cols-3 gap-32px items-end">
       <div>

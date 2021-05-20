@@ -18,18 +18,19 @@
     profileName = $profileStore.firstName + " " + $profileStore.lastName;
     familyObject = $familyStore;
 
-    for (let i of familyObject.children) {
+    for (let i of familyObject.marriages[0].children) {
       if (i.name == profileName && i.marriages) {
         spouse = i.marriages[0].spouse.name;
 
-        if (i.children) {
-          for (let e of i.children) {
+        if (i.marriages[0].children) {
+          for (let e of i.marriages[0].children) {
             children = [...children, e.name];
           }
         } else {
           children = [];
         }
       }
+
       if (i.name !== profileName) {
         siblings = [...siblings, i.name];
       }
