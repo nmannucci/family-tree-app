@@ -6,10 +6,23 @@
   // Create a component that simply calls the route when a node is clicked.
   // Put an anchor tag within each node element using vanilla js and access inner html to put an anchor tag around it.
 
+  let parsedTree = {
+    name: "Father",
+    marriages: [
+      {
+        spouse: { name: "Mother" },
+        children: [
+          { name: "Child", marriages: [{ spouse: { name: "Girlfriend" } }] },
+          { name: "Child Two", marriages: [{ spouse: {} }] },
+        ],
+      },
+    ],
+  };
+
   let element;
   let routeName;
   onMount(() => {
-    dTree.init([$familyStore], {
+    dTree.init($familyStore, {
       target: element,
       debug: true,
       height: 800,
