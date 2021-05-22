@@ -4,35 +4,61 @@ import { users, userDb } from '../src/models/user.js';
 function buildTree(user) {
   let size = 0;
   function recurseTree(user) {
-    console.log(user);
     size += 1;
-    if (!user?.children) {
+    if (!user?.hasChildren()) {
       return {
-        name: user?.firstName,
+        name: user?.name ?? 'Person',
         marriages: [
-          ...(user?.spouse
-            ? {
-                spouse: {
-                  name: userDb[user?.spouse]?.firstName,
-                },
-              }
+          ...(user?.marriages
+            ? user.marriages
+                .filter((marriage) => marriage.spouse)
+                .map((marriage, index, arr) => {
+                  const spouse = userDb[marriage.spouse];
+                  return {
+                    spouse: {
+                      name: spouse?.name ?? 'Spouse',
+                    },
+                  };
+                })
             : []),
         ],
       };
     }
 
+    const buildChildren = (children) => {
+      if (children) {
+        return children
+          .map((val, index, arr) => userDb[val])
+          .map((val, index, arr) => recurseTree(val));
+      }
+      return undefined;
+    };
+
+    const childrenNoSpouse = user.getChildrenNoSpouse();
+
     return {
-      name: user.firstName,
+      name: user.name,
       marriages: [
-        {
-          spouse: {
-            name: userDb[user.spouse]?.firstName,
-          },
-          children: user.children
-            .map((val, index, arr) => userDb[val])
-            .map((val, index, arr) => recurseTree(val)),
-        },
+        ...(user?.marriages
+          ? user.marriages
+              .filter((marriage) => marriage.spouse)
+              .map((marriage, index, arr) => {
+                const spouse = userDb[marriage?.spouse];
+                const children = marriage?.children;
+                return {
+                  spouse: {
+                    name: spouse?.name ?? 'Spouse',
+                  },
+                  children: buildChildren(children),
+                };
+              })
+          : []),
       ],
+
+      children:
+        childrenNoSpouse.length !== 0
+          ? buildChildren(childrenNoSpouse)
+          : undefined,
     };
   }
   const tree = recurseTree(user);
