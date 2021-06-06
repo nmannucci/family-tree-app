@@ -78,7 +78,7 @@
   .marriage {
     fill: none;
     stroke: #6b7280;
-    stroke-dasharray: 5;
+    stroke-dasharray: 4;
     stroke-width: 2px;
   }
   .marriageNode {

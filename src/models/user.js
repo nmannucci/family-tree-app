@@ -117,20 +117,27 @@ export const userDb = {
     'nico',
     'libby',
   ]),
-  libby: new User('libby', 'Libby', ['kat', 'tony'], undefined, [
-    'nico',
-    'matt',
-  ]),
-  // ethan: new User('ethan', 'Ethan', undefined, 'libby', undefined, ['sydney']),
+  libby: new User(
+    'libby',
+    'Libby',
+    ['kat', 'tony'],
+    [{ spouse: 'ethan' }],
+    ['nico', 'matt']
+  ),
+
+  ethan: new User(
+    'ethan',
+    'Ethan',
+    undefined,
+    [
+      {
+        spouse: 'libby',
+      },
+    ],
+    undefined
+  ),
+
   john: new User('john', 'Johhny', ['nico', 'alexis'], undefined, ['luca']),
-  // sydney: new User(
-  //   'sydney',
-  //   'Sydney',
-  //   ['ethan, libby'],
-  //   undefined,
-  //   undefined,
-  //   undefined
-  // ),
   luca: new User('luca', 'Luca', ['nico', 'alexis'], undefined, ['john']),
   nico: new User(
     'nico',
