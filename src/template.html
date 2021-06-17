@@ -8,8 +8,19 @@
     %sapper.base%
 
     <link rel="stylesheet" href="global.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="manifest" href="manifest.json" crossorigin="use-credentials" />
     <link rel="icon" type="image/png" href="favicon.png" />
+
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css"
+    />
 
     <!-- Sapper creates a <script> tag containing `src/client.js`
 	     and anything else it needs to hydrate the app and
@@ -29,8 +40,63 @@
     <!-- The application will be rendered inside this element,
 	     because `src/client.js` references it -->
     <div id="sapper">%sapper.html%</div>
-    <!-- <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3-dtree/dist/dTree.min.js"></script> -->
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: 'AIzaSyDEgPUbRho8vjPV5wPZFaI6Thwvyinnyvw',
+        authDomain: 'family-tree-app-79cd1.firebaseapp.com',
+        projectId: 'family-tree-app-79cd1',
+        storageBucket: 'family-tree-app-79cd1.appspot.com',
+        messagingSenderId: '528683594584',
+        appId: '1:528683594584:web:d849141f64377c2ff2eb2d',
+        measurementId: 'G-4GLREDSGXW',
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+    </script>
   </body>
 </html>
+
+<!-- The core Firebase JS SDK is always required and must be listed first
+ <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+
+ <!-- TODO: Add SDKs for Firebase products that you want to use
+  https://firebase.google.com/docs/web/setup#available-libraries -->
+<!-- <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-analytics.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script> -->
+
+<!-- <script>
+   // Your web app's Firebase configuration
+   // For Firebase JS SDK v7.20.0 and later, measurementId is optional -->
+<!-- var firebaseConfig = {
+     apiKey: 'AIzaSyDEgPUbRho8vjPV5wPZFaI6Thwvyinnyvw',
+     authDomain: 'family-tree-app-79cd1.firebaseapp.com',
+     projectId: 'family-tree-app-79cd1',
+     storageBucket: 'family-tree-app-79cd1.appspot.com',
+     messagingSenderId: '528683594584',
+     appId: '1:528683594584:web:d849141f64377c2ff2eb2d',
+     measurementId: 'G-4GLREDSGXW',
+   };
+   // Initialize Firebase
+   firebase.initializeApp(firebaseConfig);
+   firebase.analytics();
+
+   // make auth and firestore references
+   const auth = firebase.auth();
+   const db = firebase.firestore();
+
+   // update firestore settings
+   db.settings({ timestampsInSnapshots: true }); -->

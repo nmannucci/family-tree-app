@@ -234,8 +234,8 @@
       </div>
       <div>
         <label for="relationship" class="block mb-8px"
-          >Delete Member Relationship</label
-        >
+          >Delete Member Relationship
+        </label>
         <select
           name="relationship"
           class="py-8px px-12px w-full border border-hex-6E84A3 text-black rounded-md text-lg "

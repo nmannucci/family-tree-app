@@ -52,6 +52,7 @@ export default {
       resolve({
         browser: true,
         dedupe: ['svelte'],
+        mainFields: ['main', 'module'],
       }),
       commonjs(),
 

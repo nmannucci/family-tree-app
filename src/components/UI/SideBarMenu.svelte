@@ -2,6 +2,21 @@
   import profileStore from "../../profile-store";
 
   export let segment;
+
+  function logout() {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        // Sign-out successful.
+        console.log("Sign out successful");
+        // await tick() Use this for re-rendering the login button on the page
+        // createLoginButton();
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
 </script>
 
 <div
@@ -17,10 +32,10 @@
   <ul class="mt-52px w-full text-black text-20px font-medium h-full">
     <div class="flex flex-col justify-between h-full">
       <div>
-        <a class="text-black text-lg block" href=".">
+        <a class="text-black text-lg block" href="familyTree">
           <div
             class="w-full hover:(bg-blue-100 transform scale-103) cursor-pointer rounded-md"
-            class:bg-blue-100={segment === undefined}
+            class:bg-blue-100={segment === "familyTree"}
           >
             <li class="flex mb-32px justify-start p-12px pl-50px">
               <i class="mr-16px ">
@@ -106,8 +121,6 @@
             </li>
           </div>
         </a>
-      </div>
-      <div>
         <a class="text-black text-lg block" href="settings">
           <div
             class="w-full hover:(bg-blue-100 transform scale-103) cursor-pointer rounded-md"
@@ -132,6 +145,35 @@
                 </svg>
               </i>
               Settings
+            </li>
+          </div>
+        </a>
+      </div>
+      <div>
+        <a class="text-black text-lg block" href="." on:click={logout}>
+          <div
+            class="w-full hover:(bg-blue-100 transform scale-103) cursor-pointer rounded-md"
+            class:bg-blue-100={segment === "settings"}
+          >
+            <li class="flex mb-32px justify-start p-12px pl-50px">
+              <i class="mr-16px ">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-log-out text-blue-600"
+                  ><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline
+                    points="16 17 21 12 16 7"
+                  /><line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+              </i>
+              Logout
             </li>
           </div>
         </a>

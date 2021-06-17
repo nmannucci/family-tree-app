@@ -1,4 +1,4 @@
-class User {
+export class User {
   constructor(id, name, parents, marriages, siblings, contactInfo) {
     this.id = id;
     this.name = name;
