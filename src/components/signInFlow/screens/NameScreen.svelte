@@ -6,13 +6,16 @@
   import { quintOut, quintIn, quintInOut } from "svelte/easing";
 
   const familyMemberList = [...users];
-
   let name;
 </script>
 
 <div class="w-full px-130px h-screen flex items-center">
   <div
-    in:fly={{ x: 800, duration: 1000, easing: quintIn, delay: 1100 }}
+    in:fly={{
+      x: 450,
+      duration: 500,
+      easing: quintOut,
+    }}
     class="z-10 mb-36px flex flex-col"
   >
     <h1 class="mb-60px font-bold text-48px text-white">

@@ -2,8 +2,8 @@
   import { users } from "../../../models/user";
   import { currentUserStore } from "../../../stores/currentUserStore";
   import AutoComplete from "simple-svelte-autocomplete";
-  import { fly } from "svelte/transition";
-  import { quintIn } from "svelte/easing";
+  import { fly, slide } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
 
   const familyMemberList = [...users];
   let parents = [];
@@ -12,7 +12,11 @@
 
 <div class="w-full px-130px h-screen flex items-center">
   <div
-    in:fly={{ x: 800, duration: 1000, easing: quintIn, delay: 1100 }}
+    in:fly={{
+      x: 450,
+      duration: 500,
+      easing: quintOut,
+    }}
     class="z-10 mb-36px flex-col"
   >
     <h1 class="mb-60px font-bold text-48px text-white">

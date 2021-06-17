@@ -3,7 +3,7 @@
   import { currentUserStore } from "../../../stores/currentUserStore";
   import AutoComplete from "simple-svelte-autocomplete";
   import { fly, scale } from "svelte/transition";
-  import { quintIn } from "svelte/easing";
+  import { elasticIn, quintIn, quintOut } from "svelte/easing";
 
   const familyMemberList = [...users];
   let marriagesCount = 0;
@@ -32,7 +32,11 @@
 
 <div class="w-full px-130px h-screen flex items-start">
   <div
-    in:fly={{ x: 800, duration: 500, easing: quintIn, delay: 0 }}
+    in:fly={{
+      x: 450,
+      duration: 500,
+      easing: quintOut,
+    }}
     class="z-10 flex-col mt-64px"
   >
     {#if marriagesCount === 0}
