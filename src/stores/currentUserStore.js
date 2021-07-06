@@ -1,8 +1,16 @@
 import { writable } from 'svelte/store';
 import { User } from '../models/user';
 
-const currentUser = writable(null);
-// ERROR ON RE-LOAD OF PAGE. STORE IS EMPTY ON RE-LOAD
+let localStoredUser = new User(
+  'QAgQdq9pNmQwr4dyMHRuPYCgI3U2',
+  'Nico',
+  ['kat', 'tony'],
+  [{ spouse: 'alexis', children: ['luca', 'john'] }],
+  ['matt', 'libby'],
+  { email: 'nmannucci1@gmail.com' }
+);
+
+const currentUser = writable(localStoredUser);
 
 export const currentUserStore = {
   subscribe: currentUser.subscribe,
@@ -16,6 +24,13 @@ export const currentUserStore = {
       { email: firebaseUser.email }
     );
     currentUser.set(user);
+  },
+  setDisplayName: (displayName) => {
+    currentUser.update((user) => {
+      user.name = displayName;
+      return user;
+    });
+    console.log(displayName);
   },
   setParents: (parentIds) => {
     currentUser.update((user) => {

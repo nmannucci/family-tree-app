@@ -6,14 +6,18 @@
   import { quintOut, quintIn, quintInOut } from "svelte/easing";
 
   const familyMemberList = [...users];
-  let name;
+  let userObject;
+
+  $: if (userObject) {
+    currentUserStore.setDisplayName(userObject.name);
+  }
 </script>
 
 <div class="w-full px-130px h-screen flex items-center">
   <div
     in:fly={{
       x: 450,
-      duration: 500,
+      duration: 650,
       easing: quintOut,
     }}
     class="z-10 mb-36px flex flex-col"
@@ -27,8 +31,8 @@
       <AutoComplete
         items={familyMemberList}
         labelFieldName="name"
-        valueFieldName="value"
-        bind:value={name}
+        valueFieldName="id"
+        bind:selectedItem={userObject}
       />
     </div>
     <p class="w-6/10 text-18px text-white leading-30px">

@@ -2,7 +2,7 @@
   //TODO: Add error handling if user does not match name with relationship when deleting someone.
   // TODO: Error when you delete spouse then add them back.
   import { onMount } from "svelte";
-  import familyStore from "../../family-store";
+  import familyStore from "../../stores/family-store";
   import profileStore from "../../profile-store";
   import ProfileFamBox from "../../components/UI/ProfileFamBox.svelte";
   import ProfileIcon from "../../components/UI/ProfileIcon.svelte";

@@ -14,7 +14,7 @@
   <div
     in:fly={{
       x: 450,
-      duration: 500,
+      duration: 650,
       easing: quintOut,
     }}
     class="z-10 mb-36px flex-col"

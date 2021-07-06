@@ -1,8 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { fade, fly, slide } from "svelte/transition";
-  import { quintIn, bounceIn } from "svelte/easing";
-  import { tweened, spring } from "svelte/motion";
+  import { spring } from "svelte/motion";
   import { currentUserStore } from "../../stores/currentUserStore";
   import Loader from "../../components/Loader.svelte";
   import NavButton from "../../components/signInFlow/NavButton.svelte";
@@ -37,7 +36,7 @@
     });
   }
 
-  const springConfig = { stiffness: 0.05, damping: 0.5 };
+  const springConfig = { stiffness: 0.02, damping: 0.5 };
 
   let circ1 = spring({ x: 92, y: 2 }, springConfig);
   let circ2 = spring({ x: 100, y: 100 }, springConfig);
@@ -64,7 +63,6 @@
       circ3.set({ x: 140, y: 240 });
       circ4.set({ x: -50, y: 90 });
       circ5.set({ x: -350, y: -220 });
-      //Bring circle 5 to center of screen or up towards top
     } else if (onBoardingStep === 4) {
       circ1.set({ x: 10, y: 150 });
       circ2.set({ x: 500, y: -90 });
@@ -72,7 +70,6 @@
       circ4.set({ x: -500, y: -70 });
       circ5.set({ x: 40, y: 140 });
     }
-    // document.querySelector(".circle-1").style.translateX("100");
   };
 
   let onBoardingStep = 0;
@@ -95,28 +92,28 @@
 {:else if onBoardingStep === 0}
   <WelcomeScreen on:click={nextScreen} />
   <div
-    in:fly={{ x: -100, y: -300, duration: 1400 }}
+    in:fly={{ x: -100, y: -300, duration: 1000 }}
     style="left: {$circ1.x}px; top: {$circ1.y}px"
     class="circle-1"
   />
 
   <div
-    in:fly={{ x: 200, y: 300, duration: 1400, delay: 200 }}
+    in:fly={{ x: 200, y: 300, duration: 1000, delay: 200 }}
     style="left: {$circ2.x}px; bottom: {$circ2.y}px"
     class="circle-2 overflow-hidden"
   />
   <div
-    in:fly={{ x: 400, y: -300, duration: 1400, delay: 400 }}
+    in:fly={{ x: 400, y: -300, duration: 1000, delay: 400 }}
     style="right: {$circ3.x}px; top: {$circ3.y}px"
     class="circle-3 overflow-hidden "
   />
   <div
-    in:fly={{ x: 400, y: 0, duration: 1400, delay: 600 }}
+    in:fly={{ x: 400, y: 0, duration: 1000, delay: 600 }}
     style="right: {$circ4.x}px; bottom: {$circ4.y}px"
     class="circle-4 overflow-hidden"
   />
   <div
-    in:fly={{ x: 100, y: 0, duration: 1400, delay: 800 }}
+    in:fly={{ x: 100, y: 0, duration: 1000, delay: 800 }}
     style="right: {$circ5.x}px; top: {$circ5.y}px"
     class="circle-5 overflow-hidden"
   />

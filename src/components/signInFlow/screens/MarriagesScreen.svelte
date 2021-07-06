@@ -34,7 +34,7 @@
   <div
     in:fly={{
       x: 450,
-      duration: 500,
+      duration: 650,
       easing: quintOut,
     }}
     class="z-10 flex-col mt-64px"
@@ -52,7 +52,7 @@
         <!-- First Marriage Object -->
       {:else if marriagesCount === 1}
         <h1 class="header">
-          Your Marriage with <span class="text-hex-fcf300"
+          Your Marriage with <span class="text-hex-01e499"
             >{spouseName[0].name}
           </span>
         </h1>

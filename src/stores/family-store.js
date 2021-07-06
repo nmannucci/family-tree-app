@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import { users, userDb } from '../src/models/user.js';
+import { users, userDb } from '../models/user';
 
 function buildTree(user) {
   let size = 0;

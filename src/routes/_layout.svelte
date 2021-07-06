@@ -1,5 +1,5 @@
 <script>
-	import SideBarMenu from "../components/UI/SideBarMenu.svelte";
+	import NavBar from "../components/UI/NavBar.svelte";
 
 	export let segment;
 </script>
@@ -11,9 +11,9 @@
 		<slot />
 	</main>
 {:else}
-	<main class="flex">
-		<SideBarMenu {segment} />
-		<div class="bg-hex-f9fbfd h-screen w-full ml-280px">
+	<main>
+		<NavBar {segment} />
+		<div class="page-body">
 			<slot />
 		</div>
 	</main>
@@ -22,5 +22,10 @@
 <style>
 	div :global(h1, h2, h3, h4, p, button, a) {
 		font-family: "Poppins", sans-serif;
+	}
+
+	.page-body {
+		background: #f9fbfd;
+		margin-top: 10vh;
 	}
 </style>

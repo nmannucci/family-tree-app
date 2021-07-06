@@ -1,32 +1,37 @@
 <script>
   import { onMount } from "svelte";
-  import familyStore from "../family-store";
+  import familyStore from "../stores/family-store";
+  import { currentUserStore } from "../stores/currentUserStore";
 
   // Create component that can receive the profile data from family tree that can be passed on to the slug route.
   // Create a component that simply calls the route when a node is clicked.
   // Put an anchor tag within each node element using vanilla js and access inner html to put an anchor tag around it.
   let element;
   onMount(() => {
-    dTree.init($familyStore, {
-      target: element,
-      debug: true,
-      height: 800,
-      width: 1200,
-      class: "node",
-      textClass: "nodeText",
-      nodeWidth: 150,
-      callbacks: {
-        nodeClick: function (name, id) {
-          routeName = name;
-          console.log(name, id);
+    if (dTree) {
+      dTree.init($familyStore, {
+        target: element,
+        debug: true,
+        height: 800,
+        width: 1200,
+        class: "node",
+        textClass: "nodeText",
+        nodeWidth: 150,
+        callbacks: {
+          nodeClick: function (name, id) {
+            routeName = name;
+            console.log(name, id);
+          },
+          nodeHeightSeperation: function (nodeWidth, nodeMaxHeight) {
+            nodeMaxHeight = 200;
+            nodeWidth = 120;
+            return nodeMaxHeight;
+          },
         },
-        nodeHeightSeperation: function (nodeWidth, nodeMaxHeight) {
-          nodeMaxHeight = 200;
-          nodeWidth = 120;
-          return nodeMaxHeight;
-        },
-      },
-    });
+      });
+    } else {
+      console.log("No dTree library found");
+    }
   });
 </script>
 

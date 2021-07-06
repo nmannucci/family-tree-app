@@ -52,16 +52,3 @@
     </div>
   </div>
 </div>
-
-<!-- <h1 class="p-30px font-bold text-5xl">Sign In Page</h1>
-    {#if $currentUser}
-      <h3 class="font-semi text-4xl">{$currentUser.displayName}</h3>
-    {:else}
-      <h3>Sign in to see display name</h3>
-    {/if}
-    Supposed to toggle signin button when logged in or out
-    {#if $currentUser}
-      If user is signed in
-      <button class="font-semi text-md" on:click={signout}>Signout</button>
-      <a href="familyTree">Next to sign in flow</a>
-    {/if} -->

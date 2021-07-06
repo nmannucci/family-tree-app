@@ -1,5 +1,5 @@
 <script>
-  import profileStore from "../../profile-store";
+  import { currentUserStore } from "../../stores/currentUserStore";
 
   export let segment;
 
@@ -24,15 +24,14 @@
 >
   <div class="flex flex-col items-center">
     <div class="rounded-full w-100px h-100px bg-blue-500" />
-    <h2 class=" mt-12px font-bold text-black text-24px">
-      {$profileStore.firstName}
-      {$profileStore.lastName}
+    <h2 class=" mt-12px font-semibold text-black text-24px">
+      {$currentUserStore.name}
     </h2>
   </div>
   <ul class="mt-52px w-full text-black text-20px font-medium h-full">
     <div class="flex flex-col justify-between h-full">
       <div>
-        <a class="text-black text-lg block" href="familyTree">
+        <a class="text-black text-lg block" href="home/familyTree">
           <div
             class="w-full hover:(bg-blue-100 transform scale-103) cursor-pointer rounded-md"
             class:bg-blue-100={segment === "familyTree"}
@@ -63,7 +62,7 @@
             </li>
           </div>
         </a>
-        <a class="text-black text-lg block" href="profile">
+        <a class="text-black text-lg block" href="home/profile">
           <div
             class="w-full hover:(bg-blue-100 transform scale-103) cursor-pointer rounded-md"
             class:bg-blue-100={segment === "profile"}
@@ -92,7 +91,7 @@
             </li>
           </div>
         </a>
-        <a class="text-black text-lg block" href="uploads">
+        <a class="text-black text-lg block" href="home/uploads">
           <div
             class="w-full hover:(bg-blue-100 transform scale-103) cursor-pointer rounded-md"
             class:bg-blue-100={segment === "uploads"}
@@ -153,7 +152,6 @@
         <a class="text-black text-lg block" href="." on:click={logout}>
           <div
             class="w-full hover:(bg-blue-100 transform scale-103) cursor-pointer rounded-md"
-            class:bg-blue-100={segment === "settings"}
           >
             <li class="flex mb-32px justify-start p-12px pl-50px">
               <i class="mr-16px ">
