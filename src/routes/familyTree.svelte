@@ -43,18 +43,29 @@
     src="https://cdn.jsdelivr.net/npm/d3-dtree/dist/dTree.min.js"></script>
 </svelte:head>
 
-<section class="p-36px bg-hex-F8FBFD">
-  <h1 class="font-bold text-3xl mb-18px">Family Tree</h1>
-  <div
-    id="graph"
-    class="border-2 border-gray-300 rounded-lg"
-    bind:this={element}
-  />
+<section class="family-tree-cont bg-hex-F8FBFD">
+  <h1 class="">My Family Tree</h1>
+  <button>How do I use this?</button>
+  <div id="graph" class="border-t-2 border-gray-300" bind:this={element} />
 </section>
 
 <style>
   #graph :global(div) {
     color: black;
+  }
+
+  .family-tree-cont {
+    overflow-y: hidden;
+    height: 90vh;
+    position: relative;
+  }
+
+  .family-tree-cont h1 {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    font-weight: 700;
+    font-size: 28px;
   }
 
   /* These classes might get purged when I bundle it bc they are labeled as unused CSS */
